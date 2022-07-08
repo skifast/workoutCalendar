@@ -1,6 +1,7 @@
 package workoutCalendar;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -10,6 +11,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -24,25 +27,15 @@ public class BoxListener extends MouseAdapter
 	
 	public void mouseClicked(MouseEvent me)
 	{
-		  width = partialWidth;
-		  height = partialHeight;
-		  
-          JPanel clickedBox =(JPanel)me.getSource(); // get the reference to the box that was clicked 
-          JLabel label = (JLabel)clickedBox.getComponents()[0];
-          String number = label.getText();
-          //label.setText("clicked!");
-          //clickedBox.setBackground(Color.white);
-          JFrame userInput = new JFrame();
-          userInput.setTitle("Record Your Workout");
-          userInput.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-          //userInput.setLayout(new GridLayout());
-  	      //setting the bounds for the JFrame
-          userInput.setPreferredSize(new Dimension(width, height));
-          userInput.setLocationRelativeTo(null);
-          userInput.pack();
-          userInput.setVisible(true);
-          
-          try {
+		
+		userInput userInput = new userInput();
+        userInput.userInputPanels();
+        
+		JPanel clickedBox =(JPanel)me.getSource(); // get the reference to the box that was clicked 
+	    JLabel label = (JLabel)clickedBox.getComponents()[0];
+	    String number = label.getText();
+	        
+        try {
               File myObj = new File(number + ".txt");
               FileWriter myWriter = new FileWriter(myObj.getName());
               myWriter.write("Files in Java might be tricky, but it is fun enough!");
@@ -53,10 +46,10 @@ public class BoxListener extends MouseAdapter
               } else {
                 System.out.println("File already exists.");
               }
-            } catch (IOException e) {
+         } catch (IOException e) {
               System.out.println("An error occurred.");
               e.printStackTrace();
-            }
+         }
           // insert here the code defining what happens when a grid is clicked
     }
 }
