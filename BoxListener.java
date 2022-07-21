@@ -28,12 +28,12 @@ public class BoxListener extends MouseAdapter
 	public void mouseClicked(MouseEvent me)
 	{
 		
-		userInput userInput = new userInput();
-        userInput.userInputPanels();
-        
 		JPanel clickedBox =(JPanel)me.getSource(); // get the reference to the box that was clicked 
 	    JLabel label = (JLabel)clickedBox.getComponents()[0];
 	    String number = label.getText();
+	    
+		userInput userInput = new userInput();
+        userInput.userInputPanels(number);
 	        
         try {
               File myObj = new File(number + ".txt");
