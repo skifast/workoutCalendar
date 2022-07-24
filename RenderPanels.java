@@ -119,14 +119,6 @@ public class RenderPanels {
 		upperPanel.add(exerciseCategoryPanel);
 		panels[7] = exerciseCategoryPanel; 
 		
-		JPanel exercisesPanel = new JPanel(); 
-		exercisesPanel.setBackground(Color.white);
-		exercisesPanel.setPreferredSize(new Dimension(width - borderThickness * 8, 125));
-		exercisesPanel.setLayout(new GridLayout(displayLabels.size(), 1));
-		//exercisesPanel.setBounds(50, 50, 100, 100);
-		//exercisesPanel.setPreferredSize(new Dimension(width - borderThickness * 8, 75));
-		upperPanel.add(exercisesPanel);
-		panels[8] = exercisesPanel; 
 		
 		return panels;
 	}
