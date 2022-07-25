@@ -14,14 +14,33 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 
 public class ButtonsAndSelectors {
 	private Color barbiePink = new Color(233, 65, 150);
 	private Color powderblue = new Color(168, 234, 255);
 	
+	private int repsCurrent = 12;
+	private int repsMin = 0;
+	private int repsMax = 25;
+	private int repsStep = 1;
+	private int setsCurrent = 3;
+	private int setsMin = 0;
+	private int setsMax = 5;
+	private int setsStep = 1;
+	
 	public ButtonsAndSelectors() {
 		
+	}
+	
+	public List<JSpinner> createSpinners(List<JSpinner> spinners){
+		JSpinner repsSpinner = new JSpinner(new SpinnerNumberModel(repsCurrent, repsMin, repsMax, repsStep));
+		spinners.add(repsSpinner);
+		JSpinner setsSpinner = new JSpinner(new SpinnerNumberModel(setsCurrent, setsMin, setsMax, setsStep));
+		spinners.add(setsSpinner);
+		
+		return spinners;
 	}
 	
 	public List<JButton> createButtons(List<JButton> buttons, JPanel lowerLeft, JPanel lowerRight){
@@ -78,6 +97,10 @@ public class ButtonsAndSelectors {
 	    renderButton(selectRep, "Select Reps", false, lowerRight);
 	    buttons.add(selectRep);
 	    
+	    JButton selectSet = new JButton(); 
+	    renderButton(selectSet, "Select Set", false, lowerRight);
+	    buttons.add(selectSet);
+	    
 	    return buttons;
 	}
 	
@@ -90,7 +113,6 @@ public class ButtonsAndSelectors {
 	    //set border to empty
 	    button.setBorder(emptyBorder);
 	    button.setOpaque(true);
-	    //selectType.setContentAreaFilled(false);
 	    if(addToPage)
 	    	addToPanel.add(button);
 	}
@@ -233,7 +255,7 @@ public class ButtonsAndSelectors {
 	}
 	
 	public void addActionListeners(List<JButton> buttons, List<JComboBox<String>> selectors, JPanel lowerLeft, JPanel lowerRight,
-		List<JLabel> displayLabels, JPanel exercisesPanel, JLabel exerciseCategories, JSpinner reps_number_spinner){
+		List<JLabel> displayLabels, JPanel exercisesPanel, JLabel exerciseCategories, List<JSpinner> spinners){
 		JButton selectType = buttons.get(0);
 		JButton selectStrength = buttons.get(1);
         JButton selectCardio = buttons.get(2);
@@ -247,6 +269,7 @@ public class ButtonsAndSelectors {
         JButton selectTriceps = buttons.get(10);
         JButton selectLats = buttons.get(11);
         JButton selectRep = buttons.get(12);
+        JButton selectSet = buttons.get(13);
         
         JComboBox<String> exerciseType = selectors.get(0);
         JComboBox<String> strengthType = selectors.get(1);
@@ -261,6 +284,8 @@ public class ButtonsAndSelectors {
         JComboBox<String> tricepType = selectors.get(10);
         JComboBox<String> latType = selectors.get(11);
         
+        JSpinner repsSpinner = spinners.get(0); 
+		JSpinner setsSpinner = spinners.get(1);
         
         selectType.addActionListener(new ActionListener() {
 			@Override
@@ -300,98 +325,116 @@ public class ButtonsAndSelectors {
 			}
 		});
         
+        selectSet.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setsSpinner.setVisible(false);
+				selectSet.setVisible(false);
+				
+				int value = (int) setsSpinner.getValue();
+				JLabel curLabel = displayLabels.get(displayLabels.size() - 1);
+				curLabel.setText(curLabel.getText() + "     " + value);
+				//System.out.println(value);
+				
+				lowerRight.add(selectRep);
+				lowerRight.add(repsSpinner);
+				selectRep.setVisible(true);
+				repsSpinner.setVisible(true);
+			}
+		});
+        
         selectRep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				reps_number_spinner.setVisible(false);
+				repsSpinner.setVisible(false);
 				selectRep.setVisible(false);
 				
-				int value = (int) reps_number_spinner.getValue();
-				System.out.println(value);
-				/*
-				if(type.equals("Cardio")) {
-					lowerLeft.add(cardioType);
-					lowerLeft.add(selectCardio);
-				}*/
+				int value = (int) repsSpinner.getValue();
+				JLabel curLabel = displayLabels.get(displayLabels.size() - 1);
+				curLabel.setText(curLabel.getText() + " x " + value);
+				//System.out.println(value);
 			}
 		});
+       
+        
+        
         
 		selectShoulder.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectPartHelper(reps_number_spinner, shoulderType, selectShoulder, exerciseType, selectType, strengthType,
-						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectRep);
+				selectPartHelper(setsSpinner, shoulderType, selectShoulder, exerciseType, selectType, strengthType,
+						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectSet);
 			}
 		});
         
         selectBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectPartHelper(reps_number_spinner, backType, selectBack, exerciseType, selectType, strengthType,
-						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectRep);
+				selectPartHelper(setsSpinner, backType, selectBack, exerciseType, selectType, strengthType,
+						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectSet);
 			}
 		});
         
         selectQuads.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectPartHelper(reps_number_spinner, quadsType, selectQuads, exerciseType, selectType, strengthType,
-						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectRep);
+				selectPartHelper(setsSpinner, quadsType, selectQuads, exerciseType, selectType, strengthType,
+						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectSet);
 			}
 		});
         
         selectHamstrings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectPartHelper(reps_number_spinner, hamstringType, selectHamstrings, exerciseType, selectType, strengthType,
-						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectRep);
+				selectPartHelper(setsSpinner, hamstringType, selectHamstrings, exerciseType, selectType, strengthType,
+						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectSet);
 			}
 		});
         
         selectBiceps.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectPartHelper(reps_number_spinner, bicepType, selectBiceps, exerciseType, selectType, strengthType,
-						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectRep);
+				selectPartHelper(setsSpinner, bicepType, selectBiceps, exerciseType, selectType, strengthType,
+						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectSet);
 			}
 		});
         
         selectGlutes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectPartHelper(reps_number_spinner, gluteType, selectGlutes, exerciseType, selectType, strengthType,
-						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectRep);
+				selectPartHelper(setsSpinner, gluteType, selectGlutes, exerciseType, selectType, strengthType,
+						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectSet);
 			}
 		});
      
         selectChest.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectPartHelper(reps_number_spinner, chestType, selectChest, exerciseType, selectType, strengthType,
-						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectRep);
+				selectPartHelper(setsSpinner, chestType, selectChest, exerciseType, selectType, strengthType,
+						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectSet);
 				}
 		});
         
         selectTriceps.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectPartHelper(reps_number_spinner, tricepType, selectTriceps, exerciseType, selectType, strengthType,
-						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectRep);
+				selectPartHelper(setsSpinner, tricepType, selectTriceps, exerciseType, selectType, strengthType,
+						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectSet);
 				}
 		});
         
         selectLats.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectPartHelper(reps_number_spinner, latType, selectLats, exerciseType, selectType, strengthType,
-						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectRep);
+				selectPartHelper(setsSpinner, latType, selectLats, exerciseType, selectType, strengthType,
+						selectStrength, displayLabels, lowerLeft, lowerRight, exercisesPanel, selectSet);
 				}
 		});
 	}
 	
-	private void selectPartHelper(JSpinner reps_number_spinner, JComboBox<String> partType, JButton selectPart, JComboBox<String> exerciseType, 
+	private void selectPartHelper(JSpinner setsSpinner, JComboBox<String> partType, JButton selectPart, JComboBox<String> exerciseType, 
 			JButton selectType, JComboBox<String> strengthType, JButton selectStrength, List<JLabel> displayLabels,
-			JPanel lowerLeft, JPanel lowerRight, JPanel exercisesPanel, JButton selectRep) {
+			JPanel lowerLeft, JPanel lowerRight, JPanel exercisesPanel, JButton selectSet) {
 		partType.setVisible(false);
 		selectPart.setVisible(false);
 		
@@ -403,12 +446,12 @@ public class ButtonsAndSelectors {
 		lowerLeft.add(selectType);
 		lowerLeft.add(exerciseType);
 		
-		selectRep.setVisible(true);
-		lowerRight.add(selectRep);
+		selectSet.setVisible(true);
+		lowerRight.add(selectSet);
 		
 
-		reps_number_spinner.setVisible(true);
-		lowerRight.add(reps_number_spinner);
+		setsSpinner.setVisible(true);
+		lowerRight.add(setsSpinner);
 		
 		strengthType.setVisible(true);
 		selectStrength.setVisible(true);

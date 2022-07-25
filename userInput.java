@@ -35,11 +35,6 @@ public class userInput extends JFrame{
 	private int height; 
 	private int borderThickness = 4; 
 	
-	private int current = 12;
-	private int min = 0;
-	private int max = 25;
-	private int step = 1;
-	
 	private Color barbiePink = new Color(233, 65, 150);
 	private Color lightPink = new Color(250, 209, 230);
 	private Color powderblue = new Color(168, 234, 255);
@@ -80,8 +75,7 @@ public class userInput extends JFrame{
 		JPanel lowerRight = panels[4];
 		JPanel exercisesPanel = panels[8];
 		
-        JSpinner reps_number_spinner = new JSpinner(new SpinnerNumberModel(current, min, max, step));
-		
+   	
 		ButtonsAndSelectors buttonsAndSelectors = new ButtonsAndSelectors(); 
 		
 		List<JButton> buttons = new ArrayList<>();
@@ -90,8 +84,11 @@ public class userInput extends JFrame{
 		List<JComboBox<String>> selectors = new ArrayList<>(); 
 	    selectors =  buttonsAndSelectors.createSelectors (selectors, lowerLeft);
 	    
+	    List<JSpinner> spinners = new ArrayList<>();
+	    spinners = buttonsAndSelectors.createSpinners(spinners);
+	    
 	    buttonsAndSelectors.addActionListeners(buttons, selectors, lowerLeft, lowerRight, displayLabels,
-	    		exercisesPanel, exerciseCategories, reps_number_spinner);        
+	    		exercisesPanel, exerciseCategories, spinners);        
         
         
         strengthSelectorActionListeners(buttons, selectors, lowerLeft, lowerRight);     
