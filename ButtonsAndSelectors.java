@@ -294,14 +294,14 @@ public class ButtonsAndSelectors {
 				selectType.setVisible(false);
 				
 				String type = (String) exerciseType.getSelectedItem();
-				if(type.equals("Strength")) {
+				if("Strength".equals(type)) {
 					strengthType.setVisible(true);
 					selectStrength.setVisible(true);
 					
 					lowerLeft.add(selectStrength);
 					lowerLeft.add(strengthType);
 				}
-				else if(type.equals("Cardio")) {
+				else if("Cardio".equals(type)) {
 					cardioType.setVisible(true);
 					selectCardio.setVisible(true);
 					lowerLeft.add(selectCardio);
@@ -318,7 +318,7 @@ public class ButtonsAndSelectors {
 				selectType.setVisible(false);
 				
 				String type = (String) exerciseType.getSelectedItem();
-				if(type.equals("Cardio")) {
+				if("Cardio".equals(type)) {
 					lowerLeft.add(cardioType);
 					lowerLeft.add(selectCardio);
 				}

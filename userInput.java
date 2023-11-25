@@ -127,31 +127,31 @@ public class userInput extends JFrame{
 				selectors.get(1).setVisible(false);
 				
 				String type = (String) selectors.get(1).getSelectedItem();
-				if(type.equals("Shoulders")) {
+				if("Shoulders".equals(type)) {
 					strengthSelectorActionListenerHelper(buttons, selectors, lowerLeft, lowerRight, 3);
 				}
-				else if(type.equals("Back")) {
+				else if("Back".equals(type)) {
 					strengthSelectorActionListenerHelper(buttons, selectors, lowerLeft, lowerRight, 4);			
 				}
-				else if(type.equals("Quads")) {
+				else if("Quads".equals(type)) {
 					strengthSelectorActionListenerHelper( buttons, selectors, lowerLeft, lowerRight, 5);				
 				}
-				else if(type.equals("Hamstrings")) {
+				else if("Hamstrings".equals(type)) {
 					strengthSelectorActionListenerHelper(buttons, selectors, lowerLeft, lowerRight, 6);				
 				}
-				else if(type.equals("Biceps")){
+				else if("Biceps".equals(type)){
 					strengthSelectorActionListenerHelper(buttons, selectors, lowerLeft, lowerRight, 7);
 				}
-				else if(type.equals("Glutes")) {
+				else if("Glutes".equals(type)) {
 					strengthSelectorActionListenerHelper(buttons, selectors, lowerLeft, lowerRight, 8);				
 				}
-				else if(type.equals("Chest")) {
+				else if("Chest".equals(type)) {
 					strengthSelectorActionListenerHelper(buttons, selectors, lowerLeft, lowerRight, 9);				
 				}
-				else if(type.equals("Tricep")) {
+				else if("Tricep".equals(type)) {
 					strengthSelectorActionListenerHelper(buttons, selectors, lowerLeft, lowerRight, 10);				
 				}
-				else if(type.equals("Lat")) {
+				else if("Lat".equals(type)) {
 					strengthSelectorActionListenerHelper(buttons, selectors, lowerLeft, lowerRight, 11);			
 				}
 				
